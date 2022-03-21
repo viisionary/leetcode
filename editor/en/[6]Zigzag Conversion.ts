@@ -56,7 +56,42 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-function convert(s: string, numRows: number): string {
+import {equal} from "assert";
 
-};
+function convert(s: string, numRows: number): string {
+    //// 00 01 02 03 12 21 30 31 32 33 42 51 52
+    ////P     I    N
+    // //A   L S  I G
+    // //Y A   H R
+    // //P     I
+    if (numRows === 1 || s.length < numRows) {
+        return s;
+    }
+    const cache: any = []
+    let i = 0;
+    let j = 0;
+    for (let i = 0; i < numRows; i++) {
+        cache[i] = [];
+    }
+    let reverse = false;
+    // let single = numRows - 2
+    for (const sKey in s.split('')) {
+        cache[j].push(s[sKey]);
+        if (reverse === false) {
+            j++;
+        } else {
+            j--;
+        }
+        if (j === numRows - 1 ||  j=== 0) {
+            reverse = !reverse;
+        }
+    }
+    return cache.map(item=>item.join('')).join('')
+}
+
+describe('convert', function () {
+    it('PAYPALISHIRING', function () {
+        equal(convert('PAYPALISHIRING', 4),'PINALSIGYAHRPI') //PINALSIGYAHRPI
+    })
+});
 //leetcode submit region end(Prohibit modification and deletion)
